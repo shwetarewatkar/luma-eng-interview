@@ -8,10 +8,14 @@ var mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var patients = require('./routes/patientsR');
+var doctors = require('./routes/doctorsR');
+var appointments = require('./routes/appointmentsR');
+
 var app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb+srv://lumeHealthUser:<password>@cluster0-4dayv.mongodb.net/test?retryWrites=true', { useNewUrlParser: true })
+mongoose.connect('mongodb+srv://lumeHealthUser:user4321@cluster0-4dayv.mongodb.net/test?retryWrites=true', { useNewUrlParser: true })
   .then(() =>  console.log('db connection succesful'))
   .catch((err) => console.error(err));
 
@@ -29,8 +33,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
-var patients = require('./routes/patientsR');
 app.use('/patients', patients);
+app.use('/doctors', doctors);
+app.use('/appointments', appointments);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
